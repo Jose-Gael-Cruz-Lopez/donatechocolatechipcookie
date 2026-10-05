@@ -1,1 +1,62 @@
-# donatechocolatechipcookie
+# Donate a chocolate chip cookie
+
+A small gesture. A real connection. A minimal community invitation for curious students and builders, from the people behind [J](https://risingfounder.net/).
+
+The opening page stays intentionally quiet: an invitation, **join us :p**, and an optional explanation. The signup dialog collects name, email, school, grade/year, and a niche fun fact. Submissions are saved in a private Cloudflare D1 database; success is shown only after a successful database write. This site does not send emails automatically or process donations.
+
+## Local development
+
+Use Node 24 LTS (minimum 22.13) and npm.
+
+```sh
+npm ci
+npm run db:local
+npm run dev
+```
+
+Open http://127.0.0.1:8787. Local signups stay in the ignored `.wrangler/` directory and are separate from live signups.
+
+```sh
+npm test
+npm run typecheck
+npm run build
+```
+
+## Design
+
+- Exact original fonts from `Jose-Gael-Cruz-Lopez/J`: Teodor Light (headings), Teodor Regular (invitation links), Lay Grotesk Medium (interface).
+- White paper, black text, generous space, fine rules, restrained motion.
+- Responsive native dialogs with keyboard focus containment, Escape/backdrop closing, clear labels, reduced-motion support, and visible submission feedback.
+- Static HTML/CSS/JavaScript, without a frontend framework or third-party tracking.
+
+## Hosting and signup storage
+
+The Worker is `donatechocolatechipcookie`; its private D1 database is `donate-cookie-community`. Both belong in the same Cloudflare account as Rising Founder. `wrangler.jsonc` contains public resource identifiers, no secrets.
+
+```sh
+npx wrangler login
+npm run db:remote
+npm run deploy
+```
+
+To connect the purchased domain, add a Worker **Custom Domain** in Cloudflare under Workers & Pages → donatechocolatechipcookie → Settings → Domains & Routes. Use the exact purchased hostname. If DNS is elsewhere, bring the domain into Cloudflare first; do not replace an unrelated site's DNS. Mirror any added custom-domain route in `wrangler.jsonc` to preserve it across deployments.
+
+**View signups:** Cloudflare → Storage & Databases → D1 → donate-cookie-community → Studio → `community_members`.
+
+**Export signups:**
+
+```sh
+npm run signups:export -- --remote
+```
+
+This writes a private CSV in ignored `exports/`, ready for Google Sheets or Excel. Omit `--remote` to export local test signups. The export neutralizes spreadsheet formula prefixes in submitted text. Do not commit exports or share the database publicly.
+
+There is no public endpoint for reading personal details. Email addresses are normalized and deduplicated without allowing an unauthenticated visitor to overwrite someone else's signup. Input bounds, a honeypot, same-origin checks, short-lived hashed-IP rate limits, prepared SQL, and a restrictive content security policy protect the signup flow. A database outage returns an error and leaves form answers intact for retry.
+
+No payment, analytics, email campaign service, public member directory, or student-selection scoring is included.
+
+## Community idea
+
+Start with in-person conversations and a simple way to stay connected. Welcome people through curiosity and what they want to make, rather than school prestige. Use the fun fact as a future conversation starter; keep personal answers private.
+
+The first follow-up can invite members to a small meetup or a shared project session. Introduce J naturally when someone wants to take a project further. Measure useful introductions, meetup attendance, and projects people start together. The website collects interest; the community grows through the follow-through.
