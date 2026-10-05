@@ -4,6 +4,18 @@
   "main": "src/worker.ts",
   "compatibility_date": "2026-05-15",
   "workers_dev": true,
+  "routes": [
+    {
+      "pattern": "donateachocolatechipcookie.com",
+      "custom_domain": true,
+      "zone_id": "d05d512fb0a036d8f6cd4fcd197feaa1"
+    },
+    {
+      "pattern": "www.donateachocolatechipcookie.com",
+      "custom_domain": true,
+      "zone_id": "d05d512fb0a036d8f6cd4fcd197feaa1"
+    }
+  ],
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",

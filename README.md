@@ -1,6 +1,6 @@
 # Donate a chocolate chip cookie
 
-[Open the live website](https://donatechocolatechipcookie.cjxsez.workers.dev/) · Custom domain pending its exact hostname.
+[Open the live website](https://donateachocolatechipcookie.com/) · Also available at [www.donateachocolatechipcookie.com](https://www.donateachocolatechipcookie.com/) and the [Workers address](https://donatechocolatechipcookie.cjxsez.workers.dev/).
 
 A minimal community invitation for curious students and builders, from the people behind [J](https://risingfounder.net/). The public-facing name is **Chocolate Chip Cookie**.
 
@@ -29,6 +29,7 @@ npm run build
 - Exact original fonts from `Jose-Gael-Cruz-Lopez/J`: Teodor Light (headings), Teodor Regular (invitation links), Lay Grotesk Medium (interface).
 - White paper, black text, generous space, fine rules, restrained motion.
 - Responsive native dialogs with keyboard focus containment, Escape/backdrop closing, clear labels, reduced-motion support, and visible submission feedback.
+- The hero, About, signup, and success screens fit the viewport without page or dialog scrolling. Height-aware spacing and a landscape form layout keep controls visible; long text can still scroll inside its input field.
 - Static HTML/CSS/JavaScript, without a frontend framework or third-party tracking.
 
 ## Cookie introduction
@@ -49,7 +50,7 @@ npm run db:remote
 npm run deploy
 ```
 
-To connect the purchased domain, add a Worker **Custom Domain** in Cloudflare under Workers & Pages → donatechocolatechipcookie → Settings → Domains & Routes. Use the exact purchased hostname. If DNS is elsewhere, bring the domain into Cloudflare first; do not replace an unrelated site's DNS. Mirror any added custom-domain route in `wrangler.jsonc` to preserve it across deployments.
+The apex `donateachocolatechipcookie.com` and `www.donateachocolatechipcookie.com` are Worker **Custom Domains**, declared in `wrangler.jsonc` so deployments preserve them. Cloudflare manages their DNS records and TLS certificates. Manage them under Workers & Pages → donatechocolatechipcookie → Settings → Domains & Routes.
 
 **View signups:** Cloudflare → Storage & Databases → D1 → donate-cookie-community → Studio → `community_members`.
 
