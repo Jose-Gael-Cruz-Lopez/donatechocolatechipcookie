@@ -15,7 +15,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 button:disabled{cursor:wait;opacity:.55}
 [hidden]{display:none!important}
 ::selection{background:var(--ink);color:#fff}
-.page-shell{height:100dvh;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;padding:clamp(12px,3.4dvh,34px) 42px clamp(12px,2.8dvh,28px);opacity:1;transform:none;transition:opacity 550ms ease,transform 550ms ease}
+.page-shell{height:100dvh;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;padding:clamp(12px,3.4dvh,34px) 42px clamp(12px,2.8dvh,28px)}
 .site-footer{display:flex;justify-content:flex-end;align-items:center;gap:24px;font-size:11px;line-height:1.4;color:var(--muted)}
 .j-link{display:inline-flex;align-items:center;justify-content:center;gap:11px;text-decoration:none;font-size:11px;margin-top:clamp(14px,4.2dvh,42px);color:var(--muted);min-height:44px}
 .j-link img{display:block;object-fit:contain;transition:transform 180ms ease}
@@ -37,14 +37,14 @@ h1{font-size:clamp(42px,min(6.5vw,11dvh),92px);line-height:1.12;margin:0 auto;ma
 .skip-link:focus{transform:translateY(0)}
 .noscript-note{margin-top:20px;font-size:12px}
 
-.cookie-intro{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:var(--paper);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 420ms ease,visibility 0s linear 420ms}
-.cookie-drawing{width:clamp(180px,24vw,248px);aspect-ratio:1;display:grid;place-items:center}
-.cookie-drawing svg{display:block;width:100%;height:100%;overflow:visible}
-.intro-skip{position:absolute;right:34px;bottom:27px;background:none;border:0;padding:12px;font-size:11px;color:var(--muted)}
-.intro-pending .cookie-intro{visibility:visible;opacity:1;pointer-events:auto;transition:none}
-.intro-pending .page-shell{opacity:0;transform:translateY(8px)}
-.intro-pending .cookie-drawing path{stroke-dasharray:1;stroke-dashoffset:1}
-.intro-skipped .page-shell,.intro-skipped .cookie-intro{transition:none}
+/* Start the invitation immediately, with a gentle stagger over one second. */
+.hero-reveal{animation:hero-enter 720ms cubic-bezier(.22,1,.36,1) var(--enter-delay,0ms) both}
+.intro p:first-child{--enter-delay:70ms}
+.intro p+p{--enter-delay:140ms}
+.invitation-actions{--enter-delay:210ms}
+.j-link,.site-footer{--enter-delay:280ms}
+.page-shell:focus-within .hero-reveal{animation-duration:1ms;animation-delay:0ms}
+@keyframes hero-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 .sheet{padding:0;border:1px solid #e8e8e8;background:var(--paper);color:var(--ink);width:calc(100% - 32px);max-width:680px;max-height:calc(100dvh - 32px);overflow:hidden;overscroll-behavior:none}
 .sheet::backdrop{background:rgb(255 255 255 / .83);backdrop-filter:blur(7px)}
@@ -91,7 +91,6 @@ h2{font-size:clamp(32px,6dvh,56px);line-height:1.08;margin:0}
  .intro p+p{margin-top:13px}
  .invitation-actions{margin-top:clamp(14px,3.5dvh,30px);gap:clamp(8px,1.9dvh,16px)}
  .join-link{font-size:29px}
- .intro-skip{right:12px;bottom:16px}
  .site-footer{font-size:10px;justify-content:center;text-align:center}
  .footer-note{display:none}
  .sheet{width:calc(100% - 24px);max-height:calc(100dvh - 24px)}
@@ -156,6 +155,4 @@ h2{font-size:clamp(32px,6dvh,56px);line-height:1.08;margin:0}
 }
 @media(prefers-reduced-motion:reduce){
  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
- .intro-pending .cookie-intro{display:none}
- .intro-pending .page-shell{opacity:1;transform:none}
 }

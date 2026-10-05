@@ -1,12 +1,14 @@
 # Cookie entrance artwork
 
+Archived artwork from the previous entrance. The current site opens directly with a CSS text reveal and does not load or animate this cookie.
+
 Generated with Higgsfield Recraft V4.1 in native vector mode. One generation, completed 2026-10-05 UTC. The prompt and original SVG are retained alongside the asset. Raw request/response metadata and preview PNGs are local working files and are not committed.
 
 [Original Higgsfield result](https://d8j0ntlcm91z4.cloudfront.net/user_3JZGg2SBLH2gNxiJUqrD74CVfJ1/hf_20261005_022325_692030b7-a507-419d-b04b-eb9eb0344b22.svg)
 
 ## Files
 - `cookie-generated-original.svg`: untouched native generated SVG, 2048 x 2048 viewBox, 39 paths. It contains black and white filled geometry rendering line artwork, plus two negligible gray artifacts.
-- `cookie-contour.svg`: animation adaptation, also copied to `../../public/cookie-contour.svg`. One outer path, nine outlined chip paths and three crack contours; 13 stroke paths total. Every path's d attribute is exactly the corresponding black path in the original. No hand-drawn replacement and no raster tracing were used. White interior/face detail shapes and two gray artifacts were omitted, fill removed, explicit black strokes added, metadata/title/IDs/pathLength set, and preserveAspectRatio corrected to xMidYMid meet. The final viewBox is cropped to cubic-curve geometry bounds plus approximately 8% padding on every side (square aspect), and the background rectangle is removed.
+- `cookie-contour.svg`: archived animation adaptation. One outer path, nine outlined chip paths and three crack contours; 13 stroke paths total. Every path's d attribute is exactly the corresponding black path in the original. No hand-drawn replacement and no raster tracing were used. White interior/face detail shapes and two gray artifacts were omitted, fill removed, explicit black strokes added, metadata/title/IDs/pathLength set, and preserveAspectRatio corrected to xMidYMid meet. The final viewBox is cropped to cubic-curve geometry bounds plus approximately 8% padding on every side (square aspect), and the background rectangle is removed.
 - `*.svg.png`: local Quick Look visual previews only, not source artwork.
 - `asset-check.json`: geometry, path-count and file-integrity audit.
 

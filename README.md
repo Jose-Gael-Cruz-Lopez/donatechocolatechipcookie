@@ -32,13 +32,11 @@ npm run build
 - The hero, About, signup, and success screens fit the viewport without page or dialog scrolling. Height-aware spacing and a landscape form layout keep controls visible; long text can still scroll inside its input field.
 - Static HTML/CSS/JavaScript, without a frontend framework or third-party tracking.
 
-## Cookie introduction
+## Page entrance
 
-Higgsfield Recraft V4.1 generated the cookie as native vector artwork. Its stroke-only adaptation draws the outer contour, nine chips, and three small cracks, then fades into the hero. Source artwork and generation provenance are in `design/cookie-intro/`.
+The invitation appears immediately with a gentle CSS fade and 12px upward movement. The title leads; the copy, buttons, J signature, and footer follow in small steps. The full entrance completes within one second. There is no cookie loading screen or waiting period.
 
-`public/intro.js` orchestrates SVG stroke animations in the browser. It plays on a fresh page load, finishes drawing in roughly 2.2 seconds, and fades out over 420ms. Reduced-motion visitors see the hero immediately. The skip button or keyboard interaction immediately reveals the page; missing JavaScript leaves the page visible; a 3.2-second failsafe covers animation errors.
-
-`npm run assets:sync` embeds `public/cookie-contour.svg` into the HTML so the intro needs no separate image/video download. It also runs before development, builds, and deployment. Edit the standalone SVG as the source, then sync it.
+Reduced-motion visitors see everything immediately. Keyboard focus also reveals the full invitation immediately. The entrance needs no JavaScript; all content is visible if animations are unavailable. The previous cookie artwork is archived in `design/cookie-intro/` and is no longer loaded by the page.
 
 ## Hosting and signup storage
 
