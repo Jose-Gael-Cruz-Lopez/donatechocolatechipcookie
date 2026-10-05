@@ -9,3 +9,7 @@ test-results/
 exports/
 .DS_Store
 *.sqlite*
+design/**/*.svg.png
+design/**/generation.log
+design/**/request.json
+design/**/response.json

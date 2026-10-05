@@ -5,13 +5,14 @@
   "type": "module",
   "engines": { "node": ">=22.13.0" },
   "scripts": {
-    "dev": "wrangler dev --ip 127.0.0.1 --port 8787",
-    "build": "wrangler deploy --dry-run --outdir dist",
+    "dev": "npm run assets:sync && wrangler dev --ip 127.0.0.1 --port 8787",
+    "assets:sync": "node scripts/embed-cookie.mjs",
+    "build": "npm run assets:sync && wrangler deploy --dry-run --outdir dist",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test tests/worker.test.ts",
     "db:local": "wrangler d1 migrations apply DB --local",
     "db:remote": "wrangler d1 migrations apply DB --remote",
-    "deploy": "wrangler deploy",
+    "deploy": "npm run assets:sync && wrangler deploy",
     "signups:export": "node scripts/export-signups.mjs"
   },
   "devDependencies": {

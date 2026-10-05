@@ -15,19 +15,21 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 button:disabled{cursor:wait;opacity:.55}
 [hidden]{display:none!important}
 ::selection{background:var(--ink);color:#fff}
-.page-shell{min-height:100svh;display:grid;grid-template-rows:auto 1fr auto;padding:34px 42px 28px}
+.page-shell{min-height:100svh;display:grid;grid-template-rows:auto 1fr auto;padding:34px 42px 28px;opacity:1;transform:none;transition:opacity 550ms ease,transform 550ms ease}
 .site-header,.site-footer{display:flex;justify-content:space-between;align-items:center;gap:24px;font-size:12px;line-height:1.4}
-.header-note{letter-spacing:-.01em}
-.j-link{display:flex;align-items:center;gap:12px;text-decoration:none;font-size:12px}
+.site-header{color:var(--muted);font-size:11px}
+.j-link{display:inline-flex;align-items:center;justify-content:center;gap:11px;text-decoration:none;font-size:11px;margin-top:42px;color:var(--muted);min-height:44px}
 .j-link img{display:block;object-fit:contain;transition:transform 180ms ease}
 .j-link:hover img{transform:rotate(-7deg)}
-.invitation{align-self:center;text-align:center;padding:70px 20px 80px}
+.invitation{align-self:center;text-align:center;padding:74px 20px 70px}
 .eyebrow{margin:0 0 28px;font-size:12px;line-height:1.5;letter-spacing:.025em}
 h1,h2{font-family:var(--serif);font-weight:300;letter-spacing:-.025em}
-h1{font-size:clamp(64px,7.5vw,108px);line-height:1.06;margin:0 auto;max-width:1080px}
-.intro{margin:30px auto 0;font-size:15px;line-height:1.6;letter-spacing:-.015em}
-.invitation-actions{display:flex;flex-direction:column;align-items:center;gap:25px;margin-top:45px}
-.join-link{border:0;background:transparent;padding:0 2px 7px;font-family:var(--serif);font-weight:400;font-size:38px;line-height:1.25;letter-spacing:-.025em;position:relative}
+h1{font-size:clamp(58px,6.5vw,92px);line-height:1.12;margin:0 auto;max-width:1120px;letter-spacing:-.018em;text-wrap:balance}
+.intro{margin:28px auto 0;font-size:14px;line-height:1.75;letter-spacing:-.012em;max-width:480px}
+.intro p{margin:0}
+.intro p+p{margin-top:12px;color:var(--muted)}
+.invitation-actions{display:flex;flex-direction:column;align-items:center;gap:19px;margin-top:34px}
+.join-link{border:0;background:transparent;padding:0 2px 8px;font-family:var(--serif);font-weight:400;font-size:31px;line-height:1.25;letter-spacing:-.02em;position:relative}
 .link-line{position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--ink);transform:scaleX(.24);transform-origin:center;transition:transform 240ms ease}
 .join-link:hover .link-line,.join-link:focus-visible .link-line{transform:scaleX(1)}
 .quiet-link{font-family:var(--sans);font-size:12px;line-height:1.4;background:none;border:none;padding:10px 6px;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;transition:text-decoration-color 180ms}
@@ -36,6 +38,15 @@ h1{font-size:clamp(64px,7.5vw,108px);line-height:1.06;margin:0 auto;max-width:10
 .skip-link{position:fixed;z-index:5;top:12px;left:12px;transform:translateY(-180%);padding:12px;background:#fff}
 .skip-link:focus{transform:translateY(0)}
 .noscript-note{margin-top:20px;font-size:12px}
+
+.cookie-intro{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:var(--paper);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 420ms ease,visibility 0s linear 420ms}
+.cookie-drawing{width:clamp(180px,24vw,248px);aspect-ratio:1;display:grid;place-items:center}
+.cookie-drawing svg{display:block;width:100%;height:100%;overflow:visible}
+.intro-skip{position:absolute;right:34px;bottom:27px;background:none;border:0;padding:12px;font-size:11px;color:var(--muted)}
+.intro-pending .cookie-intro{visibility:visible;opacity:1;pointer-events:auto;transition:none}
+.intro-pending .page-shell{opacity:0;transform:translateY(8px)}
+.intro-pending .cookie-drawing path{stroke-dasharray:1;stroke-dashoffset:1}
+.intro-skipped .page-shell,.intro-skipped .cookie-intro{transition:none}
 
 .sheet{padding:0;border:1px solid #e8e8e8;background:var(--paper);color:var(--ink);width:calc(100% - 48px);max-width:680px;max-height:calc(100svh - 48px);overflow:auto;overscroll-behavior:contain}
 .sheet::backdrop{background:rgb(255 255 255 / .83);backdrop-filter:blur(7px)}
@@ -69,20 +80,21 @@ h2{font-size:56px;line-height:1.08;margin:0}
 .success-smile{display:block;margin-top:10px}
 .success-view p:not(.eyebrow){font-size:14px;line-height:1.7;margin:28px 0}
 @keyframes arrive{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@media(min-width:1600px){.page-shell{padding:40px 54px 32px}.invitation{padding-block:90px}h1{font-size:116px}}
+@media(min-width:1600px){.page-shell{padding:40px 54px 32px}.invitation{padding-block:90px}h1{font-size:100px}}
 @media(max-width:640px){
  .page-shell{padding:24px 22px 22px}
  .site-header{font-size:10px;align-items:flex-start}
- .j-link{font-size:10px;gap:8px;max-width:137px}
- .j-link span{max-width:88px;text-align:right}
- .j-link img{width:16px;height:24px}
- .invitation{padding:66px 0 70px}
+ .j-link{font-size:10px;gap:10px;margin-top:31px}
+ .j-link img{width:22px;height:33px}
+ .invitation{padding:68px 0 60px}
  .eyebrow{font-size:11px;margin-bottom:26px}
- h1{font-size:clamp(48px,13.7vw,82px);line-height:1.1;letter-spacing:-.027em;max-width:490px}
+ h1{font-size:clamp(48px,12.5vw,76px);line-height:1.1;letter-spacing:-.02em;max-width:490px}
  .desktop-break{display:none}
- .intro{font-size:13px;line-height:1.6;margin-top:25px;max-width:275px}
- .invitation-actions{margin-top:38px;gap:23px}
- .join-link{font-size:34px}
+ .intro{font-size:13px;line-height:1.65;margin-top:25px;max-width:300px}
+ .intro p+p{margin-top:13px}
+ .invitation-actions{margin-top:30px;gap:16px}
+ .join-link{font-size:29px}
+ .intro-skip{right:12px;bottom:16px}
  .site-footer{font-size:10px;justify-content:center;text-align:center}
  .footer-note{display:none}
  .sheet{width:calc(100% - 24px);max-height:calc(100svh - 24px)}
@@ -95,4 +107,8 @@ h2{font-size:56px;line-height:1.08;margin:0}
  .about-copy{font-size:14px}
  .success-view{padding:38px 0}
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+ .intro-pending .cookie-intro{display:none}
+ .intro-pending .page-shell{opacity:1;transform:none}
+}

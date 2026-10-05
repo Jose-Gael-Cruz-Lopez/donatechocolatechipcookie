@@ -88,7 +88,7 @@ form.addEventListener('submit', async (event) => {
     clearTimeout(timeout);
     submitting = false;
     submitButton.disabled = false;
-    submitLabel.textContent = 'join us :p';
+    submitLabel.textContent = 'Count me in :p';
     form.removeAttribute('aria-busy');
   }
 });
