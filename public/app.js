@@ -8,6 +8,11 @@ const successView = document.querySelector('#success-view');
 let lastTrigger = null;
 let submitting = false;
 
+// Finish the entrance on interaction, and keep it finished when focus moves.
+document.querySelector('.page-shell').addEventListener('focusin', (event) => {
+  event.currentTarget.classList.add('entrance-complete');
+}, { once: true });
+
 function closeDialog(dialog) {
   dialog.close();
 }

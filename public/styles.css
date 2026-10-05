@@ -43,7 +43,7 @@ h1{font-size:clamp(42px,min(6.5vw,11dvh),92px);line-height:1.12;margin:0 auto;ma
 .intro p+p{--enter-delay:140ms}
 .invitation-actions{--enter-delay:210ms}
 .j-link,.site-footer{--enter-delay:280ms}
-.page-shell:focus-within .hero-reveal{animation-duration:1ms;animation-delay:0ms}
+.page-shell.entrance-complete .hero-reveal{animation:none}
 @keyframes hero-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 .sheet{padding:0;border:1px solid #e8e8e8;background:var(--paper);color:var(--ink);width:calc(100% - 32px);max-width:680px;max-height:calc(100dvh - 32px);overflow:hidden;overscroll-behavior:none}
