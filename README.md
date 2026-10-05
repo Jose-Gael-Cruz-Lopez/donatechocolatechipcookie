@@ -1,5 +1,7 @@
 # Donate a chocolate chip cookie
 
+[Open the live website](https://donatechocolatechipcookie.cjxsez.workers.dev/) · Custom domain pending its exact hostname.
+
 A small gesture. A real connection. A minimal community invitation for curious students and builders, from the people behind [J](https://risingfounder.net/).
 
 The opening page stays intentionally quiet: an invitation, **join us :p**, and an optional explanation. The signup dialog collects name, email, school, grade/year, and a niche fun fact. Submissions are saved in a private Cloudflare D1 database; success is shown only after a successful database write. This site does not send emails automatically or process donations.
