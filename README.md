@@ -60,9 +60,21 @@ npm run signups:export -- --remote
 
 This writes a private CSV in ignored `exports/`, ready for Google Sheets or Excel. Omit `--remote` to export local test signups. The export neutralizes spreadsheet formula prefixes in submitted text. Do not commit exports or share the database publicly.
 
-There is no public endpoint for reading personal details. Email addresses are normalized and deduplicated without allowing an unauthenticated visitor to overwrite someone else's signup. Input bounds, a honeypot, same-origin checks, short-lived hashed-IP rate limits, prepared SQL, and a restrictive content security policy protect the signup flow. A database outage returns an error and leaves form answers intact for retry.
+There is no public endpoint for reading personal details. The private admin API checks authentication on every request. Email addresses are normalized and deduplicated without allowing an unauthenticated visitor to overwrite someone else's signup. Input bounds, a honeypot, same-origin checks, short-lived hashed-IP rate limits, prepared SQL, and a restrictive content security policy protect the signup flow. A database outage returns an error and leaves form answers intact for retry.
 
 No payment, analytics, email campaign service, public member directory, or student-selection scoring is included.
+
+## Private admin portal
+
+Open [the admin portal](https://donateachocolatechipcookie.com/admin/). It shows registrations, total signups, signups today (UTC), distinct schools, searchable fields, pagination, and CSV export. It is read-only apart from signing in and out; public visitors cannot list registrations.
+
+The owner is configured in `ADMIN_EMAIL`. A dedicated, randomly generated admin password is saved locally in the ignored `exports/admin-access.txt` file for the owner. Only its SHA-256 hash is stored in the Cloudflare Worker secret `ADMIN_PASSWORD_HASH`; the password and hash are never committed. Keep generated passwords at least 32 random bytes. `ADMIN_ORIGIN` restricts admin access to the primary HTTPS domain. The Workers address and `www` redirect admin pages there; their admin API requests are denied.
+
+Apply `migrations/0002_admin.sql` before deploying the portal. D1 stores only hashes of 256-bit session tokens in `admin_sessions`, with an eight-hour expiry. Cookies are Secure, HttpOnly, and SameSite=Strict. Logout revokes the session immediately and checks a CSRF token. Password rotation invalidates every previous session automatically. Failed logins are throttled in `admin_login_attempts`; both tables contain short-lived authentication state, separate from `community_members`.
+
+To rotate access, generate a fresh random password, compute its SHA-256 hex digest, and update the secret using `npx wrangler secret put ADMIN_PASSWORD_HASH`. Update the owner's private login file separately. Do not commit credentials, session cookies, database exports, or `.dev.vars`.
+
+For local development, set `ADMIN_ORIGIN=http://127.0.0.1:8787`, `ADMIN_EMAIL`, and a test password's `ADMIN_PASSWORD_HASH` in the ignored `.dev.vars`. Run `npm run db:local` and `npm run dev`. The `/admin` assets always run through the Worker so static routing cannot bypass the login guard. Admin responses disable caching and search indexing. CSV exports use a fixed record snapshot and escape spreadsheet formula prefixes.
 
 ## Community idea
 
