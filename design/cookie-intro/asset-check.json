@@ -1,0 +1,58 @@
+{
+  "provider": "Higgsfield",
+  "model": "Recraft V4.1",
+  "job_type": "recraft_v4_1",
+  "model_type": "vector",
+  "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZGg2SBLH2gNxiJUqrD74CVfJ1/hf_20261005_022325_692030b7-a507-419d-b04b-eb9eb0344b22.svg",
+  "created_at": "2026-10-05T02:23:25.237812Z",
+  "native_svg": true,
+  "source_viewbox": "0 0 2048 2048",
+  "source_dimensions": [
+    "2048",
+    "2048"
+  ],
+  "source_path_count": 39,
+  "animation_path_count": 13,
+  "outer_contours": 1,
+  "chips": 9,
+  "cracks": 3,
+  "animation_geometry_matches_native_black_paths": true,
+  "embedded_raster_count": 0,
+  "animation_background": "transparent",
+  "animation_fill": "none",
+  "animation_stroke": "#000000",
+  "files": {
+    "cookie-generated-original.svg": {
+      "bytes": 37240,
+      "sha256": "1c1cb17838b32022c4f2cac20f7978eb85cf8fd998f094375d80c63b3c8f7652"
+    },
+    "cookie-contour.svg": {
+      "bytes": 9831,
+      "sha256": "11711ef339278d92d48ca43554989d18274a7f4e8121b2df7da51777050e42f3"
+    }
+  },
+  "animation_viewbox": "299.4070 302.7333 1448.1256 1448.1256",
+  "drawing_bounds_including_max_half_stroke": [
+    402.59876898262786,
+    402.60406459208554,
+    1644.3408073979,
+    1650.9881693346347
+  ],
+  "padding_fraction_each_edge": 0.08,
+  "drawing_height_at_220px_css_box": 189.6551724137931,
+  "path_index_order": [
+    "cookie-outer",
+    "cookie-chip-01",
+    "cookie-chip-02",
+    "cookie-chip-03",
+    "cookie-chip-04",
+    "cookie-chip-05",
+    "cookie-chip-06",
+    "cookie-chip-07",
+    "cookie-chip-08",
+    "cookie-chip-09",
+    "cookie-crack-01",
+    "cookie-crack-02",
+    "cookie-crack-03"
+  ]
+}

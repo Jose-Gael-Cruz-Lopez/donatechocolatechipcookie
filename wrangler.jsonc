@@ -1,0 +1,37 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "donatechocolatechipcookie",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-05-15",
+  "workers_dev": true,
+  "vars": {
+    "ADMIN_ORIGIN": "https://donateachocolatechipcookie.com",
+    "ADMIN_EMAIL": "cjxsez@gmail.com"
+  },
+  "routes": [
+    {
+      "pattern": "donateachocolatechipcookie.com",
+      "custom_domain": true,
+      "zone_id": "d05d512fb0a036d8f6cd4fcd197feaa1"
+    },
+    {
+      "pattern": "www.donateachocolatechipcookie.com",
+      "custom_domain": true,
+      "zone_id": "d05d512fb0a036d8f6cd4fcd197feaa1"
+    }
+  ],
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*", "/admin", "/admin/*"],
+    "not_found_handling": "404-page"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "donate-cookie-community",
+      "database_id": "c245a379-838f-4012-81ec-2452f191f929",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

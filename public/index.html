@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Chocolate Chip Cookie</title>
+    <meta
+      name="description"
+      content="A cookie is a very good excuse to meet someone. A little community of curious students, half-baked ideas, and very good company. An initiative by J."
+    />
+    <meta property="og:title" content="Chocolate Chip Cookie" />
+    <meta
+      property="og:description"
+      content="Curious students. Half-baked ideas. Very good company. Cut the Cookie and see who you meet."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://donateachocolatechipcookie.com/" />
+    <link rel="canonical" href="https://donateachocolatechipcookie.com/" />
+    <link rel="icon" href="/cookie.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/fonts/Teodor-Light.woff"
+      as="font"
+      type="font/woff"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/LayGrotesk-Medium.woff"
+      as="font"
+      type="font/woff"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to invitation</a>
+    <div class="page-shell">
+      <main class="invitation" id="main">
+        <h1 class="hero-reveal">Chocolate Chip Cookie</h1>
+        <div class="intro">
+          <p class="hero-reveal">
+            A cookie is a very good excuse to meet someone.
+          </p>
+          <p class="hero-reveal">
+            We’re a little community of curious students,<br
+              class="desktop-break"
+            />
+            half-baked ideas, and very good company.<br class="desktop-break" />
+            There’s room for you here.
+          </p>
+        </div>
+        <div class="invitation-actions hero-reveal">
+          <button class="join-link" type="button" data-open="join-dialog">
+            Cut the Cookie<span class="link-line" aria-hidden="true"></span>
+          </button>
+          <button class="quiet-link" type="button" data-open="about-dialog">
+            what’s this?
+          </button>
+        </div>
+        <a
+          class="j-link hero-reveal"
+          href="https://risingfounder.net/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="An initiative by J — visit Rising Founder (opens in a new tab)"
+        >
+          <span>an initiative by</span
+          ><img src="/j-black.svg" alt="J" width="24" height="36" />
+        </a>
+        <noscript
+          ><p class="noscript-note">
+            Please enable JavaScript to open the signup form.
+          </p></noscript
+        >
+      </main>
+
+      <footer class="site-footer hero-reveal">
+        <a
+          class="footer-note"
+          href="/admin/"
+          aria-label="Good things start with a hello. — Open admin portal"
+          title="Open admin portal"
+          >Good things start with a hello.</a
+        >
+      </footer>
+    </div>
+
+    <dialog
+      id="about-dialog"
+      class="sheet about-sheet"
+      aria-labelledby="about-title"
+    >
+      <div class="sheet-inner">
+        <button
+          class="close-button"
+          type="button"
+          data-close
+          aria-label="Close about this community"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+        <p class="eyebrow">a little about us</p>
+        <h2 id="about-title">A cookie is just<br />the beginning.</h2>
+        <div class="about-copy">
+          <p>
+            Some of the best things start with a conversation you didn’t plan to
+            have.
+          </p>
+          <p>
+            We’re bringing together students who make things, ask good
+            questions, and want to meet people doing the same. Share an idea.
+            Find someone to build with. Make a friend along the way.
+          </p>
+          <p>
+            A little community from the people behind
+            <a
+              href="https://risingfounder.net/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >J ↗</a
+            >. You don’t need a startup or a finished project. Just come
+            curious.
+          </p>
+        </div>
+        <button
+          class="join-link about-join"
+          type="button"
+          data-open="join-dialog"
+        >
+          Cut the Cookie<span class="link-line" aria-hidden="true"></span>
+        </button>
+      </div>
+    </dialog>
+
+    <dialog
+      id="join-dialog"
+      class="sheet join-sheet"
+      aria-labelledby="join-title"
+      aria-describedby="join-description"
+    >
+      <div class="sheet-inner">
+        <button
+          class="close-button"
+          type="button"
+          data-close
+          aria-label="Close signup form"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+        <div id="form-view">
+          <p class="eyebrow">there’s room for you here</p>
+          <h2 id="join-title">Come say hello.</h2>
+          <p class="sheet-description" id="join-description">
+            A few details, so we can get to know you.
+          </p>
+          <form id="join-form" action="/api/join" method="post">
+            <div class="field-grid">
+              <div class="field">
+                <label for="name">Your name</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autocomplete="name"
+                  placeholder="First and last"
+                  maxlength="100"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="email">Email address</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="you@somewhere.com"
+                  maxlength="254"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="school">School</label>
+                <input
+                  id="school"
+                  name="school"
+                  type="text"
+                  autocomplete="organization"
+                  placeholder="Where you study"
+                  maxlength="150"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="grade">Grade / year</label>
+                <input
+                  id="grade"
+                  name="grade"
+                  type="text"
+                  placeholder="e.g. 12th grade, sophomore"
+                  maxlength="80"
+                  required
+                />
+              </div>
+              <div class="field field-wide">
+                <label for="fun-fact">A niche fun fact about you</label>
+                <textarea
+                  id="fun-fact"
+                  name="funFact"
+                  rows="2"
+                  placeholder="The oddly specific thing that makes you, you."
+                  maxlength="500"
+                  required
+                  aria-describedby="fun-fact-hint"
+                ></textarea>
+                <span class="field-hint" id="fun-fact-hint"
+                  >A tiny obsession, an unexpected skill, anything.</span
+                >
+              </div>
+            </div>
+            <div class="honeypot" aria-hidden="true">
+              <label for="website">Leave this empty</label>
+              <input
+                id="website"
+                name="website"
+                type="text"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </div>
+            <p class="form-error" id="form-error" role="alert" hidden></p>
+            <button class="submit-button" type="submit">
+              <span id="submit-label">Count me in :p</span
+              ><span aria-hidden="true">↗</span>
+            </button>
+            <p class="privacy-note">
+              Your answers stay with our community team. We’ll only use them to
+              get in touch about this community.
+            </p>
+          </form>
+        </div>
+        <div id="success-view" class="success-view" hidden>
+          <p class="eyebrow">a new connection starts here</p>
+          <h2 id="success-title" tabindex="-1">
+            You’re on the list<span class="success-smile">:)</span>
+          </h2>
+          <p>
+            We’ll be in touch about what’s next.<br />Until then, keep making
+            interesting things.
+          </p>
+          <button class="quiet-link" type="button" data-close>
+            back to the beginning ↗
+          </button>
+        </div>
+      </div>
+    </dialog>
+  </body>
+</html>
