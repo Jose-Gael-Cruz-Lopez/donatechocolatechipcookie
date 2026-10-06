@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>The guest list — Chocolate Chip Cookie</title>
+    <link rel="icon" href="/cookie.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/admin/admin.css" />
+    <script src="/admin/admin.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to registrations</a>
+    <div class="admin-shell">
+      <header class="admin-header">
+        <a class="wordmark" href="/"
+          >Chocolate Chip Cookie<span>community desk</span></a
+        >
+        <div class="account-menu">
+          <span class="account-email" id="account-email">Checking access…</span>
+          <button class="text-button" id="logout" type="button" disabled>
+            Log out ↗
+          </button>
+        </div>
+      </header>
+
+      <main id="main">
+        <section class="page-heading" aria-labelledby="page-title">
+          <div>
+            <p class="eyebrow">good company, all in one place</p>
+            <h1 id="page-title">The guest list.</h1>
+            <p class="page-description">
+              A little about the people who said hello.
+            </p>
+          </div>
+          <a
+            class="website-link"
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open the invitation <span aria-hidden="true">↗</span>
+            <span class="sr-only">(opens in a new tab)</span>
+          </a>
+        </section>
+
+        <noscript>
+          <p class="notice">
+            Enable JavaScript to view registrations and manage your session.
+          </p>
+        </noscript>
+
+        <section class="stats" aria-label="Community totals">
+          <div class="stat">
+            <p class="stat-label">Registrations</p>
+            <p class="stat-value" id="stat-total">—</p>
+          </div>
+          <div class="stat">
+            <p class="stat-label">Joined today <span>(UTC)</span></p>
+            <p class="stat-value" id="stat-today">—</p>
+          </div>
+          <div class="stat">
+            <p class="stat-label">Schools represented</p>
+            <p class="stat-value" id="stat-schools">—</p>
+          </div>
+        </section>
+
+        <section class="registrations" aria-labelledby="registrations-title">
+          <div class="section-heading">
+            <h2 id="registrations-title">Everyone, so far.</h2>
+            <div class="list-actions">
+              <button
+                class="button button-light"
+                id="refresh"
+                type="button"
+                disabled
+              >
+                Refresh
+              </button>
+              <button
+                class="button button-dark"
+                id="export"
+                type="button"
+                disabled
+              >
+                Export CSV <span aria-hidden="true">↓</span>
+              </button>
+            </div>
+          </div>
+
+          <form class="search-form" id="search-form" role="search">
+            <div class="search-field">
+              <label for="search">Search registrations</label>
+              <input
+                id="search"
+                name="search"
+                type="search"
+                maxlength="200"
+                autocomplete="off"
+                placeholder="Name, email, school, year, or fun fact"
+                aria-describedby="search-hint"
+              />
+            </div>
+            <button class="button button-light search-submit" type="submit">
+              Search
+            </button>
+            <button
+              class="text-button clear-search"
+              id="clear-search"
+              type="button"
+              hidden
+            >
+              Clear
+            </button>
+          </form>
+          <div class="list-meta">
+            <p id="search-hint">
+              Search all five signup fields. Exports include every matching
+              registration.
+            </p>
+            <p id="last-updated"></p>
+          </div>
+
+          <p
+            class="notice error-notice"
+            id="admin-error"
+            role="alert"
+            hidden
+          ></p>
+          <p
+            class="sr-only"
+            id="action-status"
+            role="status"
+            aria-live="polite"
+          ></p>
+
+          <div id="results" aria-busy="true">
+            <div
+              class="list-state"
+              id="list-state"
+              role="status"
+              aria-live="polite"
+            >
+              <p class="state-title" id="state-title">
+                Opening the guest list…
+              </p>
+              <p class="state-copy" id="state-copy">Checking your session.</p>
+            </div>
+            <table class="registrations-table" id="registrations-table" hidden>
+              <caption class="sr-only">
+                Community registrations. Joined dates are shown in UTC.
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">School</th>
+                  <th scope="col">Grade / year</th>
+                  <th scope="col">Fun fact</th>
+                  <th scope="col">Joined <span>(UTC)</span></th>
+                </tr>
+              </thead>
+              <tbody id="registration-rows"></tbody>
+            </table>
+          </div>
+
+          <div class="pagination">
+            <p id="result-count" role="status" aria-live="polite">
+              Loading registrations…
+            </p>
+            <nav class="page-controls" aria-label="Registration pages">
+              <button
+                class="button button-light"
+                id="previous"
+                type="button"
+                disabled
+              >
+                ← Previous
+              </button>
+              <span class="page-position" id="page-position">—</span>
+              <button
+                class="button button-light"
+                id="next"
+                type="button"
+                disabled
+              >
+                Next →
+              </button>
+            </nav>
+          </div>
+        </section>
+      </main>
+
+      <footer class="admin-footer">
+        <p>Private registrations. Keep people’s details private.</p>
+        <a
+          class="j-signature"
+          href="https://risingfounder.net/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="An initiative by J — opens in a new tab"
+        >
+          <span>an initiative by</span
+          ><img src="/j-black.svg" alt="J" width="20" height="30" />
+        </a>
+      </footer>
+    </div>
+  </body>
+</html>
