@@ -5,10 +5,10 @@
   "type": "module",
   "engines": { "node": ">=22.13.0" },
   "scripts": {
-    "dev": "wrangler dev --ip 127.0.0.1 --port 8787",
+    "dev": "wrangler dev --ip 127.0.0.1 --port 8787 --local-upstream 127.0.0.1:8787 --upstream-protocol http",
     "build": "wrangler deploy --dry-run --outdir dist",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test tests/worker.test.ts",
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
     "db:local": "wrangler d1 migrations apply DB --local",
     "db:remote": "wrangler d1 migrations apply DB --remote",
     "deploy": "wrangler deploy",
