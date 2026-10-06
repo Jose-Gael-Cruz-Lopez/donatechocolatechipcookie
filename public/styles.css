@@ -99,6 +99,17 @@ button:disabled {
   line-height: 1.4;
   color: var(--muted);
 }
+.footer-note {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  text-decoration: none;
+}
+.footer-note:hover,
+.footer-note:focus-visible {
+  color: var(--ink);
+  text-decoration: underline;
+}
 .j-link {
   display: inline-flex;
   align-items: center;
@@ -499,9 +510,6 @@ h2 {
     font-size: 10px;
     justify-content: center;
     text-align: center;
-  }
-  .footer-note {
-    display: none;
   }
   .sheet {
     width: calc(100% - 24px);
