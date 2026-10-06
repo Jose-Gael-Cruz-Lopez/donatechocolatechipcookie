@@ -35,7 +35,7 @@ type Registration = {
 };
 const COLUMNS = "id, name, email, school, grade, fun_fact, created_at";
 const SEARCH =
-  "(name LIKE ?1 ESCAPE '!' OR email LIKE ?1 ESCAPE '!' OR school LIKE ?1 ESCAPE '!' OR grade LIKE ?1 ESCAPE '!' OR fun_fact LIKE ?1 ESCAPE '!')";
+  "(instr(lower(name), lower(?1)) > 0 OR instr(lower(email), lower(?1)) > 0 OR instr(lower(school), lower(?1)) > 0 OR instr(lower(grade), lower(?1)) > 0 OR instr(lower(fun_fact), lower(?1)) > 0)";
 
 function json(status: number, body: Record<string, unknown>, extra = {}) {
   return new Response(JSON.stringify(body), {
@@ -228,10 +228,11 @@ async function login(request: Request, env: Env) {
   return json(200, { ok: true }, { "Set-Cookie": cookie(token) });
 }
 
-function searchPattern(url: URL) {
+function searchText(url: URL) {
   const search = (url.searchParams.get("search") || "").trim();
   if (search.length > 200) return null;
-  return `%${search.replace(/[!%_]/g, (character) => `!${character}`)}%`;
+  // Literal substring matching avoids D1's 50-byte LIKE pattern limit.
+  return search;
 }
 function pageNumber(value: string | null, fallback: number) {
   return value === null
@@ -241,7 +242,7 @@ function pageNumber(value: string | null, fallback: number) {
       : null;
 }
 async function registrations(url: URL, env: Env) {
-  const pattern = searchPattern(url);
+  const pattern = searchText(url);
   const requestedPage = pageNumber(url.searchParams.get("page"), 1);
   const pageSize = pageNumber(url.searchParams.get("pageSize"), 25);
   if (
@@ -311,7 +312,7 @@ function csvRows(rows: Registration[]) {
     .join("");
 }
 async function exportRegistrations(url: URL, env: Env) {
-  const pattern = searchPattern(url);
+  const pattern = searchText(url);
   if (pattern === null)
     return error(400, "Keep the search under 200 characters.");
   const [snapshot] = await query<{ lastId: number }>(

@@ -47,6 +47,12 @@ function fixture(t: TestContext) {
           },
           async run<T>() {
             queries.push({ sql: query, values });
+            if (
+              /\bLIKE\b/i.test(query) &&
+              typeof values[0] === "string" &&
+              Buffer.byteLength(values[0], "utf8") > 50
+            )
+              throw new Error("LIKE or GLOB pattern too complex");
             const rows = sql.prepare(query).all(...values);
             return { success: true, results: rows as T[] };
           },
@@ -842,7 +848,7 @@ test("registrations paginate in stable newest-first order, clamp excess pages, a
   assert.deepEqual(search.stats, first.stats);
 });
 
-test("literal search escapes LIKE metacharacters and keeps injection strings in bound parameters", async (t) => {
+test("literal search treats wildcard characters literally and keeps injection strings in bound parameters", async (t) => {
   const { env, queries, seed } = fixture(t);
   for (const school of [
     "100% Makers",
@@ -879,6 +885,40 @@ test("literal search escapes LIKE metacharacters and keeps injection strings in 
         ),
       );
     }
+  }
+});
+
+test("long and multibyte searches work within D1 limits for lists and CSV exports", async (t) => {
+  const { env, seed } = fixture(t);
+  const needles = [
+    "Long query ".repeat(18).trim(),
+    "é".repeat(30),
+    "_".repeat(100),
+  ];
+  for (const funFact of needles) seed({ funFact });
+  const signed = await signIn(env);
+  for (const needle of needles) {
+    const query = encodeURIComponent(needle);
+    const response = await worker.fetch(
+      adminRequest(`/api/admin/registrations?search=${query}`, {
+        cookie: signed.cookie,
+      }),
+      env,
+    );
+    assert.equal(response.status, 200);
+    const body = (await response.json()) as any;
+    assert.equal(body.total, 1);
+    assert.equal(body.registrations[0].fun_fact, needle);
+    const exported = await worker.fetch(
+      adminRequest(`/api/admin/export?search=${query}`, {
+        cookie: signed.cookie,
+      }),
+      env,
+    );
+    assert.equal(exported.status, 200);
+    const csv = await exported.text();
+    assert.ok(csv.includes(needle));
+    assert.equal(csv.trim().split("\r\n").length, 2);
   }
 });
 
