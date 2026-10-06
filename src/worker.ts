@@ -1,3 +1,5 @@
+import { handleAdmin } from "./admin.ts";
+
 type SQLValue = string | number | null;
 
 interface DatabaseResult<T = Record<string, unknown>> {
@@ -13,6 +15,9 @@ interface Statement {
 export interface Env {
   DB: { prepare(sql: string): Statement };
   ASSETS: { fetch(request: Request): Promise<Response> };
+  ADMIN_PASSWORD_HASH?: string;
+  ADMIN_ORIGIN?: string;
+  ADMIN_EMAIL?: string;
 }
 
 const BODY_LIMIT = 16 * 1024;
@@ -273,6 +278,13 @@ async function join(request: Request, env: Env): Promise<Response> {
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const path = new URL(request.url).pathname;
+    if (
+      path === "/admin" ||
+      path.startsWith("/admin/") ||
+      path === "/api/admin" ||
+      path.startsWith("/api/admin/")
+    )
+      return handleAdmin(request, env);
     if (path === "/api/join") return join(request, env);
     if (path === "/api" || path.startsWith("/api/"))
       return error(404, "Not found.");

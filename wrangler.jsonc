@@ -4,6 +4,10 @@
   "main": "src/worker.ts",
   "compatibility_date": "2026-05-15",
   "workers_dev": true,
+  "vars": {
+    "ADMIN_ORIGIN": "https://donateachocolatechipcookie.com",
+    "ADMIN_EMAIL": "cjxsez@gmail.com"
+  },
   "routes": [
     {
       "pattern": "donateachocolatechipcookie.com",
@@ -19,7 +23,7 @@
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
-    "run_worker_first": ["/api/*"],
+    "run_worker_first": ["/api/*", "/admin", "/admin/*"],
     "not_found_handling": "404-page"
   },
   "d1_databases": [
