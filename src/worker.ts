@@ -30,7 +30,13 @@ const FIELD_LIMITS = {
   grade: 80,
   funFact: 500,
 } as const;
-type JoinFields = { -readonly [Key in keyof typeof FIELD_LIMITS]: string };
+/** Unlike FIELD_LIMITS, these may be left blank — not everyone has a profile yet. */
+const OPTIONAL_FIELD_LIMITS = {
+  linkedin: 200,
+} as const;
+type JoinFields = { -readonly [Key in keyof typeof FIELD_LIMITS]: string } & {
+  -readonly [Key in keyof typeof OPTIONAL_FIELD_LIMITS]: string;
+};
 
 const SECURITY_HEADERS = {
   "X-Content-Type-Options": "nosniff",
@@ -141,7 +147,11 @@ function validate(payload: unknown): JoinFields | null {
   if (!payload || typeof payload !== "object" || Array.isArray(payload))
     return null;
   const input = payload as Record<string, unknown>;
-  const allowed = new Set([...Object.keys(FIELD_LIMITS), "website"]);
+  const allowed = new Set([
+    ...Object.keys(FIELD_LIMITS),
+    ...Object.keys(OPTIONAL_FIELD_LIMITS),
+    "website",
+  ]);
   if (Object.keys(input).some((key) => !allowed.has(key))) return null;
   if (
     input.website !== undefined &&
@@ -150,7 +160,7 @@ function validate(payload: unknown): JoinFields | null {
     return null;
 
   const fields = {} as JoinFields;
-  for (const key of Object.keys(FIELD_LIMITS) as (keyof JoinFields)[]) {
+  for (const key of Object.keys(FIELD_LIMITS) as (keyof typeof FIELD_LIMITS)[]) {
     if (typeof input[key] !== "string") return null;
     const value = input[key].trim();
     if (!value || value.length > FIELD_LIMITS[key]) return null;
@@ -162,6 +172,20 @@ function validate(payload: unknown): JoinFields | null {
       ).test(value)
     )
       return null;
+    fields[key] = value;
+  }
+  for (const key of Object.keys(
+    OPTIONAL_FIELD_LIMITS,
+  ) as (keyof typeof OPTIONAL_FIELD_LIMITS)[]) {
+    const raw = input[key];
+    if (raw === undefined) {
+      fields[key] = "";
+      continue;
+    }
+    if (typeof raw !== "string") return null;
+    const value = raw.trim();
+    if (value.length > OPTIONAL_FIELD_LIMITS[key]) return null;
+    if (/[\u0000-\u001f\u007f]/.test(value)) return null;
     fields[key] = value;
   }
   fields.email = fields.email.toLowerCase();
@@ -248,7 +272,7 @@ async function join(request: Request, env: Env): Promise<Response> {
         { "Retry-After": String(limit.retryAfter) },
       );
     const result = await env.DB.prepare(
-      "INSERT INTO community_members (name, email, school, grade, fun_fact) VALUES (?1, ?2, ?3, ?4, ?5) " +
+      "INSERT INTO community_members (name, email, school, grade, fun_fact, linkedin) VALUES (?1, ?2, ?3, ?4, ?5, ?6) " +
         "ON CONFLICT(email) DO NOTHING",
     )
       .bind(
@@ -257,6 +281,7 @@ async function join(request: Request, env: Env): Promise<Response> {
         fields.school,
         fields.grade,
         fields.funFact,
+        fields.linkedin,
       )
       .run();
     if (!result.success) throw new Error("Database unavailable");

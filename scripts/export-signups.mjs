@@ -16,7 +16,7 @@ const output = execFileSync(
     mode,
     "--json",
     "--command",
-    "SELECT name, email, school, grade, fun_fact, created_at FROM community_members ORDER BY created_at DESC;",
+    "SELECT name, email, school, grade, fun_fact, linkedin, created_at FROM community_members ORDER BY created_at DESC;",
   ],
   { cwd: root, encoding: "utf8", maxBuffer: 20 * 1024 * 1024 },
 );
@@ -28,7 +28,15 @@ if (
 ) {
   throw new Error("Could not read the signup database. No export was written.");
 }
-const columns = ["name", "email", "school", "grade", "fun_fact", "created_at"];
+const columns = [
+  "name",
+  "email",
+  "school",
+  "grade",
+  "fun_fact",
+  "linkedin",
+  "created_at",
+];
 function cell(value) {
   let text = String(value ?? "");
   // Treat user-supplied text as text when opened in Excel/Google Sheets.

@@ -31,11 +31,12 @@ type Registration = {
   school: string;
   grade: string;
   fun_fact: string;
+  linkedin: string;
   created_at: string;
 };
-const COLUMNS = "id, name, email, school, grade, fun_fact, created_at";
+const COLUMNS = "id, name, email, school, grade, fun_fact, linkedin, created_at";
 const SEARCH =
-  "(instr(lower(name), lower(?1)) > 0 OR instr(lower(email), lower(?1)) > 0 OR instr(lower(school), lower(?1)) > 0 OR instr(lower(grade), lower(?1)) > 0 OR instr(lower(fun_fact), lower(?1)) > 0)";
+  "(instr(lower(name), lower(?1)) > 0 OR instr(lower(email), lower(?1)) > 0 OR instr(lower(school), lower(?1)) > 0 OR instr(lower(grade), lower(?1)) > 0 OR instr(lower(fun_fact), lower(?1)) > 0 OR instr(lower(linkedin), lower(?1)) > 0)";
 
 function json(status: number, body: Record<string, unknown>, extra = {}) {
   return new Response(JSON.stringify(body), {
@@ -304,6 +305,7 @@ function csvRows(rows: Registration[]) {
           row.school,
           row.grade,
           row.fun_fact,
+          row.linkedin,
           row.created_at,
         ]
           .map(csvCell)
@@ -342,7 +344,7 @@ async function exportRegistrations(url: URL, env: Env) {
             snapshot.lastId,
           );
         const header = first
-          ? "\uFEFFID,Name,Email,School,Grade / year,Fun fact,Joined at (UTC)\r\n"
+          ? "\uFEFFID,Name,Email,School,Grade / year,Fun fact,LinkedIn,Joined at (UTC)\r\n"
           : "";
         first = false;
         controller.enqueue(encoder.encode(header + csvRows(batch)));

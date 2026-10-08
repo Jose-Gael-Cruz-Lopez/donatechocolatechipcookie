@@ -998,7 +998,7 @@ test("untrusted registration content is returned as JSON data and CSV formulas a
   assertPrivate(exported);
   const csv = parseCSV(await exported.text());
   assert.equal(csv.length, 8);
-  assert.ok(csv.every((row) => row.length === 7));
+  assert.ok(csv.every((row) => row.length === 8));
   assert.equal(csv[1][1], attack);
   assert.equal(csv[1][5], 'A comma, a "quote",\nand another line.');
   for (const [index, raw] of dangerous.entries())

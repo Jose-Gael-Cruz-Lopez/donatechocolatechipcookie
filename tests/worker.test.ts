@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { DatabaseSync } from "node:sqlite";
 import { URL as NodeURL } from "node:url";
 import test from "node:test";
@@ -11,6 +11,11 @@ const migration = readFileSync(
   new NodeURL("../migrations/0001_community.sql", import.meta.url),
   "utf8",
 );
+const migrationsURL = new NodeURL("../migrations/", import.meta.url);
+const migrations = readdirSync(migrationsURL)
+  .filter((name) => /^\d+.*\.sql$/.test(name))
+  .sort()
+  .map((name) => readFileSync(new NodeURL(name, migrationsURL), "utf8"));
 const origin = "https://community.example";
 const valid = {
   name: "Alex Rivera",
@@ -23,7 +28,7 @@ const valid = {
 
 function fixture(t: TestContext) {
   const sql = new DatabaseSync(":memory:");
-  sql.exec(migration);
+  for (const m of migrations) sql.exec(m);
   t.after(() => sql.close());
   const queries: { sql: string; values: (string | number | null)[] }[] = [];
   const env: Env = {
@@ -101,6 +106,7 @@ test("a successful submission stores trimmed values and a normalized email", asy
       school: " Central High ",
       grade: " 11 ",
       funFact: " I bake. ",
+      linkedin: " linkedin.com/in/alex ",
     }),
     env,
   );
@@ -115,7 +121,31 @@ test("a successful submission stores trimmed values and a normalized email", asy
   assert.equal(member.school, "Central High");
   assert.equal(member.grade, "11");
   assert.equal(member.fun_fact, "I bake.");
+  assert.equal(member.linkedin, "linkedin.com/in/alex");
   assert.match(String(member.created_at), /^\d{4}-\d{2}-\d{2}T/);
+});
+
+test("linkedin is optional: absent stores blank, present is trimmed, and limits still apply", async (t) => {
+  const { env, members } = fixture(t);
+  assert.equal((await worker.fetch(request(valid), env)).status, 201);
+  assert.equal(members()[0].linkedin, "");
+
+  for (const bad of [
+    { ...valid, email: "second@example.com", linkedin: 1 },
+    {
+      ...valid,
+      email: "third@example.com",
+      linkedin: "l".repeat(201),
+    },
+    {
+      ...valid,
+      email: "fourth@example.com",
+      linkedin: "bad\u0000char",
+    },
+  ]) {
+    assert.equal((await worker.fetch(request(bad), env)).status, 400);
+  }
+  assert.equal(members().length, 1);
 });
 
 test("a duplicate receives the same success without overwriting the original signup", async (t) => {

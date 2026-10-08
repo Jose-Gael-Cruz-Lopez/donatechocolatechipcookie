@@ -338,6 +338,9 @@ h2 {
   font-size: 12px;
   line-height: 1.4;
 }
+.optional-tag {
+  color: var(--muted);
+}
 .field input,
 .field textarea {
   width: 100%;

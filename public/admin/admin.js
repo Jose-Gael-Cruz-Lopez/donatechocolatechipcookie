@@ -197,6 +197,7 @@ function row(registration) {
     cell("School", registration.school),
     cell("Grade / year", registration.grade),
     cell("Fun fact", registration.fun_fact, "fun-fact"),
+    cell("LinkedIn", registration.linkedin),
   );
   const date = new Date(registration.created_at);
   const dateCell = cell("Joined (UTC)", "—", "joined-date");
@@ -258,7 +259,7 @@ function render(result) {
         ? "No matches this time."
         : "The first hello is still to come.",
       state.search
-        ? `No registrations match “${state.search}”. Try another name, email, school, year, or fun fact.`
+        ? `No registrations match “${state.search}”. Try another name, email, school, year, fun fact, or LinkedIn.`
         : "New registrations will appear here when someone joins through the invitation.",
     );
     elements.count.textContent = state.search ? "0 matches" : "0 registrations";

@@ -4,7 +4,7 @@
 
 A minimal community invitation for curious students and builders, from the people behind [J](https://risingfounder.net/). The public-facing name is **Chocolate Chip Cookie**.
 
-The opening page stays intentionally quiet: an invitation, **Cut the Cookie**, and an optional explanation. The signup dialog collects name, email, school, grade/year, and a niche fun fact. Submissions are saved in a private Cloudflare D1 database; success is shown only after a successful database write. This site does not send emails automatically or process donations.
+The opening page stays intentionally quiet: an invitation, **Cut the Cookie**, and an optional explanation. The signup dialog collects name, email, school, grade/year, an optional LinkedIn, and a niche fun fact. Submissions are saved in a private Cloudflare D1 database; success is shown only after a successful database write. This site does not send emails automatically or process donations.
 
 ## Local development
 
